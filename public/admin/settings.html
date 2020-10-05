@@ -1,3 +1,8 @@
+<!-- 登录拦截 -->
+<script src="/login/status"></script>
+<script type="text/javascript">
+	if (!isLogin) window.location.href = 'login.html';
+</script>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -17,7 +22,7 @@
       <button class="btn btn-default navbar-btn fa fa-bars"></button>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="password-reset.html"><i class="fa fa-user"></i>修改密码</a></li>
-        <li><a href="login.html"><i class="fa fa-sign-out"></i>退出</a></li>
+        <li><a href="javascript:;" id="loginOut"><i class="fa fa-sign-out"></i>退出</a></li>
       </ul>
     </nav>
     <div class="container-fluid">
@@ -25,50 +30,19 @@
         <h1>网站设置</h1>
       </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label for="site_logo" class="col-sm-2 control-label">网站图标</label>
-          <div class="col-sm-6">
-            <label class="form-image">
-              <input type="file">
-              <img src="../assets/img/logo.png">
-              <i class="mask fa fa-upload"></i>
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">站点名称</label>
-          <div class="col-sm-6">
-            <input class="form-control" type="text" placeholder="站点名称">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">评论</label>
-          <div class="col-sm-6">
-            <div class="checkbox">
-              <label><input type="checkbox" checked>开启评论功能</label>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" checked>评论必须经人工批准</label>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-6">
-            <button type="submit" class="btn btn-primary">保存设置</button>
-          </div>
-        </div>
+      <div class="alert alert-danger" style="display: none;" id="info">
+        <strong>错误！</strong> <span></span>
+      </div>
+      <form class="form-horizontal" id="settingForm">
+        
       </form>
     </div>
   </div>
 
   <div class="aside">
     <div class="profile">
-      <img class="avatar" src="../uploads/avatar.jpg">
-      <h3 class="name">Coder</h3>
+      <img class="avatar">
+      <h3 class="name"></h3>
     </div>
     <ul class="nav">
       <li>
@@ -102,8 +76,46 @@
     </ul>
   </div>
 
+  <script type="text/html" id="tpl-settings">
+  	<div class="form-group">
+  	  <label for="site_logo" class="col-sm-2 control-label">网站图标</label>
+  	  <div class="col-sm-6">
+  	    <label class="form-image">
+  	      <input type="file" id="logo">
+  	      <img src="{{logo ? logo : '../assets/img/logo.png'}}" id="logoImg">
+  	      <i class="mask fa fa-upload"></i>
+  		  <input type="hidden" name="logo" id="hiddenLogo" value="{{logo}}">
+  	    </label>
+  	  </div>
+  	</div>
+  	<div class="form-group">
+  	  <label class="col-sm-2 control-label">站点名称</label>
+  	  <div class="col-sm-6">
+  	    <input class="form-control" type="text" placeholder="站点名称" name="title" value="{{title}}">
+  	  </div>
+  	</div>
+  	<div class="form-group">
+  	  <label class="col-sm-2 control-label">评论</label>
+  	  <div class="col-sm-6">
+  	    <div class="checkbox">
+  	      <label><input type="checkbox" id="comment" {{comment ? 'checked' : ''}}>开启评论功能</label>
+  	    </div>
+  	    <div class="checkbox">
+  	      <label><input type="checkbox" id="review" {{review ? 'checked' : ''}}>评论必须经人工批准</label>
+  	    </div>
+  	  </div>
+  	</div>
+  	<div class="form-group">
+  	  <div class="col-sm-offset-2 col-sm-6">
+  	    <button type="submit" class="btn btn-primary">保存设置</button>
+  	  </div>
+  	</div>
+  </script>
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/settings.js"></script>
   <script>NProgress.done()</script>
 </body>
 </html>

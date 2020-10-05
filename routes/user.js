@@ -13,6 +13,8 @@ user.delete('/:id', require('./actions/user/findByIdAndDelete'));
 user.put('/:id', require('./actions/user/findByIdAndUpdate'));
 // 根据用户id查询用户信息
 user.get('/:id', require('./actions/user/findById'));
+// 根据email查询用户信息
+user.get('/szj/:email', require('./actions/user/findByEmail'));
 
 // 导出路由
 module.exports = user;

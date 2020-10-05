@@ -23,6 +23,8 @@ post.get('/search/:key', require('./actions/post/search'))
 post.get('/:id', require('./actions/post/findById'));
 // 根据ID修改文章
 post.put('/:id', require('./actions/post/findByIdAndUpdate'));
+// 查找link链接
+post.get('/szj/link', require('./actions/post/findLink'));
 
 
 module.exports = post;
